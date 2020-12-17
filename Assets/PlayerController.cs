@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public float fallMultiplier;
     public float lowJumpFallMultiplier;
+    public float groundCheckRange = 0.5f;
 
     bool jumpPressed;
     public bool enableShortJump = true;
@@ -61,10 +62,11 @@ public class PlayerController : MonoBehaviour
         // player leci do góry, ale spacja nie jest wciśnięta
         else if (playerBody.velocity.y > 0 && !jumpPressed)
         {
+            playerBody.velocity += Vector2.up * Physics2D.gravity * lowJumpFallMultiplier * Time.deltaTime;
             //lowJumpFallMultiplier
         }
     }
 
-    bool IsGrounded() => Physics2D.OverlapCircle(groundChecker.position, 0.5f, gorundLayer) != null;
+    bool IsGrounded() => Physics2D.OverlapCircle(groundChecker.position, groundCheckRange, gorundLayer) != null;
 
 }
